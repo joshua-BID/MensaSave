@@ -225,7 +225,18 @@ __marimo__/
 *.joblib
 *.pkl
 models/*.joblib
+models/*.pkl
 
 # Cartelle dati locali
 data/raw/
 data/processed/
+
+# Dati locali (se pesanti)
+#data/*.csv
+#data/*.xlsx
+
+# Docker volumes
+mysql_data/
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
