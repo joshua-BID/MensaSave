@@ -153,6 +153,7 @@ activemq-data/
 .env
 .envrc
 .venv
+.venv/
 env/
 venv/
 ENV/
@@ -231,9 +232,9 @@ models/*.pkl
 data/raw/
 data/processed/
 
-# Dati locali (se pesanti)
-#data/*.csv
-#data/*.xlsx
+Dati locali (se pesanti)
+data/*.csv
+data/*.xlsx
 
 # Docker volumes
 mysql_data/
