@@ -153,6 +153,7 @@ activemq-data/
 .env
 .envrc
 .venv
+.venv/
 env/
 venv/
 ENV/
@@ -231,9 +232,13 @@ models/*.pkl
 data/raw/
 data/processed/
 
+<<<<<<< Updated upstream
+#Dati locali (se pesanti)
+=======
 # Dati locali (se pesanti)
-#data/*.csv
-#data/*.xlsx
+>>>>>>> Stashed changes
+data/*.csv
+data/*.xlsx
 
 # Docker volumes
 mysql_data/
