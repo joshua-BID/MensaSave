@@ -232,7 +232,11 @@ models/*.pkl
 data/raw/
 data/processed/
 
+<<<<<<< Updated upstream
 #Dati locali (se pesanti)
+=======
+# Dati locali (se pesanti)
+>>>>>>> Stashed changes
 data/*.csv
 data/*.xlsx
 
