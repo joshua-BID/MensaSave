@@ -12,7 +12,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from utils.db import Database
 
-CSV_PATH = Path(__file__).resolve().parent.parent / "data" / "Dataset_Waste-Food.csv"
+CSV_PATH = Path(__file__).resolve().parent.parent / "data" / "dataset_mensa.csv"
 
 # nome colonna nel CSV -> nome colonna nel database
 COLONNE = {

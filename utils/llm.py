@@ -1,18 +1,33 @@
 """
-Report settimanale generato da un LLM (Ollama o OpenRouter, API compatibile OpenAI).
+Report settimanale generato da un LLM tramite l'API di Groq Cloud.
 
 Flusso: pandas calcola i numeri -> i numeri vanno nel prompt -> l'LLM scrive il testo.
 I calcoli li fa pandas perché gli LLM sbagliano facilmente l'aritmetica.
+Il testo arriva a pezzetti (streaming) e Streamlit lo mostra man mano con st.write_stream.
 """
 
 import json
 import os
 
 import pandas as pd
-import requests
 from dotenv import load_dotenv
+from groq import (
+    APIConnectionError,
+    AuthenticationError,
+    BadRequestError,
+    Groq,
+    GroqError,
+    NotFoundError,
+    RateLimitError,
+)
 
 load_dotenv()
+
+MODELLO_DEFAULT = "openai/gpt-oss-20b"
+
+
+def nome_modello() -> str:
+    return os.getenv("GROQ_MODEL", MODELLO_DEFAULT)
 
 
 def calcola_statistiche_settimana(df: pd.DataFrame, settimana_inizio) -> dict:
@@ -67,37 +82,36 @@ def costruisci_prompt(stats: dict) -> tuple[str, str]:
     return system, user
 
 
-def chiama_llm(system: str, user: str) -> tuple[str, str]:
-    """Chiama l'API e restituisce (testo, nome_modello)."""
-    base_url = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1").rstrip("/")
-    api_key = os.getenv("LLM_API_KEY", "")
-    modello = os.getenv("LLM_MODEL", "llama3.2")
-    try:
-        risposta = requests.post(
-            f"{base_url}/chat/completions",
-            headers={"Authorization": f"Bearer {api_key}"},
-            json={
-                "model": modello,
-                "temperature": 0.3,
-                "messages": [
-                    {"role": "system", "content": system},
-                    {"role": "user", "content": user},
-                ],
-            },
-            timeout=180,
-        )
-        risposta.raise_for_status()
-        return risposta.json()["choices"][0]["message"]["content"].strip(), modello
-    except requests.exceptions.ConnectionError as e:
-        raise RuntimeError(
-            f"Impossibile contattare l'LLM su {base_url}. "
-            "Se usi Ollama, è avviato? (ollama serve)") from e
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Errore nella chiamata all'LLM: {e}") from e
-    except (KeyError, IndexError, ValueError) as e:
-        raise RuntimeError("Risposta dell'LLM in un formato inatteso.") from e
-
-
-def genera_report(stats: dict) -> tuple[str, str]:
+def genera_report_stream(stats: dict):
+    """Generatore: restituisce il report un pezzetto alla volta.
+    Si usa con:  testo = st.write_stream(genera_report_stream(stats))"""
     system, user = costruisci_prompt(stats)
-    return chiama_llm(system, user)
+    if not os.getenv("GROQ_API_KEY"):
+        raise RuntimeError("Manca la chiave GROQ_API_KEY nel file .env (si crea su console.groq.com/keys).")
+    try:
+        client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+        stream = client.chat.completions.create(
+            model=nome_modello(),
+            messages=[
+                {"role": "system", "content": system},
+                {"role": "user", "content": user},
+            ],
+            temperature=0.3,
+            stream=True,
+        )
+        for chunk in stream:
+            pezzo = chunk.choices[0].delta.content if chunk.choices else None
+            if pezzo:
+                yield pezzo
+    except AuthenticationError as e:
+        raise RuntimeError("Chiave API di Groq non valida: controlla GROQ_API_KEY nel file .env.") from e
+    except (NotFoundError, BadRequestError) as e:
+        raise RuntimeError(
+            f"Richiesta rifiutata da Groq (modello «{nome_modello()}» disponibile? "
+            f"Controlla GROQ_MODEL su console.groq.com/docs/models). Dettaglio: {e}") from e
+    except RateLimitError as e:
+        raise RuntimeError("Limite di richieste di Groq raggiunto: riprova tra qualche istante.") from e
+    except APIConnectionError as e:
+        raise RuntimeError("Impossibile contattare Groq: controlla la connessione a Internet.") from e
+    except GroqError as e:  # include il caso "GROQ_API_KEY mancante"
+        raise RuntimeError(f"Errore Groq: {e}") from e
