@@ -23,7 +23,7 @@ modello di regressione (scikit-learn) e report settimanale scritto da un LLM (Gr
 ├── utils/
 │   ├── db.py                       # classe Database (MySQL)
 │   ├── carica_dati.py              # importa il CSV nel database
-│   ├── features.py                 # preparazione dei dati
+│   ├── features.py                 # previsto per la preparazione dei dati (per ora in ml.py)
 │   ├── ml.py                       # training, valutazione, previsione
 │   ├── llm.py                      # statistiche settimanali + report (Groq)
 │   └── comune.py                   # connessione, cache e colori condivisi dalle pagine
@@ -88,4 +88,4 @@ EU AI Act (rischio minimo), limiti e usi impropri. Dettagli nella pagina «Info 
 | `docker compose down -v` | reset totale (cancella anche il database) |
 
 ## Gruppo
-_Nomi dei componenti_
+Daniel Quattrone · Joshua Galarza
