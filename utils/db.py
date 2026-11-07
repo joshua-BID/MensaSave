@@ -1,6 +1,6 @@
 """
 Accesso al database MySQL (classe Database).
-Le credenziali si leggono dal file .env (vedi env_template.txt).
+Le credenziali si leggono dal file .env (vedi .env.example).
 """
 
 import os
