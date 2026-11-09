@@ -83,6 +83,13 @@ class Database:
              "cat": categoria_id, "peso": peso_kg, "prezzo": prezzo},
         )
 
+    def elimina_spreco(self, spreco_id: int) -> bool:
+        """Elimina un singolo record dal database in base al suo ID."""
+        from sqlalchemy import text
+        with self.engine.begin() as conn:
+            result = conn.execute(text("DELETE FROM sprechi WHERE id = :id"), {"id": spreco_id})
+            return result.rowcount > 0
+
     # ---------- Report settimanali ----------
     def salva_report(self, settimana_inizio, testo: str, modello_llm: str) -> None:
         self.esegui(

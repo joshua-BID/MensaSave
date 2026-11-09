@@ -1,18 +1,36 @@
-"""Previsione: scegli data e categoria di piatto, il modello stima lo spreco in kg."""
+"""Previsione dello spreco con Machine Learning e consigli dell'LLM."""
 
 import sys
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[2]))
 
-import pandas as pd
 import streamlit as st
+import pandas as pd
 
 from utils import ml
 from utils.comune import carica_o_ferma, get_modello
 
+
 st.set_page_config(page_title="Previsione - MensaSave", page_icon="🔮", layout="wide")
-st.title("🔮 Previsione dello spreco")
+
+# BLOCCO STILE: Titoli verde #1C9770 e ingrandimento font
+st.markdown("""
+    <style>
+    h1 { font-size: 2.5rem !important; color: #1C9770 !important; font-weight: 700; }
+    h2, h3 { font-size: 1.6rem !important; color: #0F172A !important; }
+    p, label { font-size: 1.5rem !important; }
+    div[data-testid="stForm"] {
+        border: 1px solid #E2E8F0;
+        border-radius: 10px;
+        padding: 20px;
+        background-color: #F8FAFC;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+st.title("🔮 Previsione Sprechi ")
+st.write("Stima dello spreco in base alle condizioni meteorologiche e alle presenze.")
 
 df = carica_o_ferma()
 
