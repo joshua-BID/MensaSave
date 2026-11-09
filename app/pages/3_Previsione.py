@@ -1,4 +1,4 @@
-"""Previsione dello spreco con Machine Learning e consigli dell'LLM."""
+"""Previsione dello spreco con Machine Learning."""
 
 import sys
 from pathlib import Path
@@ -30,7 +30,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("🔮 Previsione Sprechi ")
-st.write("Stima dello spreco in base alle condizioni meteorologiche e alle presenze.")
+st.write("Stima dello spreco in base a data, pasto, sezione e categoria di piatto.")
 
 df = carica_o_ferma()
 

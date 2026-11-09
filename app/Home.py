@@ -1,7 +1,7 @@
 """
 MensaSave — Home
 ================
-Lancio (dalla cartella principale del progetto):   streamlit run app/app.py
+Lancio (dalla cartella principale del progetto):   streamlit run app/Home.py
 Le altre pagine stanno in app/pages/ e Streamlit crea da solo il menu laterale.
 """
 
