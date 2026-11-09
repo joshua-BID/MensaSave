@@ -1,0 +1,5 @@
+Modello,MAE test,RMSE test,R2 test,MAE CV,R2 CV
+Baseline (media),1.215,1.39,-0.0,1.219,-0.002
+LinearRegression,1.211,1.386,0.006,1.219,-0.004
+RandomForest,1.223,1.403,-0.018,1.216,-0.006
+GradientBoosting,1.214,1.394,-0.005,1.215,0.0

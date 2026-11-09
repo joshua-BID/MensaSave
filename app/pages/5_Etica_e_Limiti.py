@@ -1,9 +1,24 @@
-"""Info ed etica: limiti, privacy e avvisi."""
+"""Informazioni sul progetto e Dichiarazione Etica."""
+
+import sys
+from pathlib import Path
+
+sys.path.append(str(Path(__file__).resolve().parents[2]))
 
 import streamlit as st
 
-st.set_page_config(page_title="Info ed etica - MensaSave", page_icon="⚖️", layout="wide")
-st.title("⚖️ Info ed etica")
+st.set_page_config(page_title="Info ed Etica - MensaSave", page_icon="⚖️", layout="wide")
+
+# BLOCCO STILE
+st.markdown("""
+    <style>
+    h1 { font-size: 2.5rem !important; color: #1C9770 !important; font-weight: 700; }
+    h2, h3 { font-size: 1.6rem !important; color: #0F172A !important; }
+    p, label { font-size: 1.5rem !important; }
+    </style>
+""", unsafe_allow_html=True)
+
+st.title("⚖️ Dichiarazione Etica e Limiti del Sistema")
 
 st.subheader("Bias nei dati e nel modello")
 st.write(

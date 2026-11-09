@@ -19,6 +19,39 @@ from utils.comune import carica_sprechi, get_db
 
 st.set_page_config(page_title="MensaSave", page_icon="🍽️", layout="wide")
 
+# BLOCCO STILE GLOBALE ED ELEGANTE (Verde #1C9770, numeri grandi e testo visibile)
+st.markdown("""
+    <style>
+    /* Titoli principali */
+    h1 { font-size: 2.6rem !important; color: #1C9770 !important; font-weight: 700; }
+    h2, h3 { font-size: 1.7rem !important; color: #0F172A !important; font-weight: 600; }
+    
+    /* Ingrandimento del testo generale e punti elenco */
+    p, label, li { font-size: 1.5rem !important; line-height: 1.6 !important; }
+    
+    /* Valori numerici delle metriche (Verdi e Grandi) */
+    [data-testid="stMetricValue"] {
+        font-size: 2.5rem !important;
+        font-weight: 700 !important;
+        color: #1C9770 !important;
+    }
+    
+    /* Etichette delle metriche */
+    [data-testid="stMetricLabel"] {
+        font-size: 1.15rem !important;
+        color: #475569 !important;
+        font-weight: 500 !important;
+    }
+    
+    /* Rende il testo della data responsive per evitare che venga tagliato */
+    .metric-date {
+        font-size: 1.6rem !important;
+        font-weight: 700;
+        color: #1C9770;
+        margin-top: 5px;
+    }
+    </style>
+""", unsafe_allow_html=True)
 st.title("🍽️ MensaSave")
 st.write("Applicazione per ridurre lo spreco alimentare in mensa: storico degli sprechi, "
          "previsione con machine learning e report settimanale scritto da un'AI.")
