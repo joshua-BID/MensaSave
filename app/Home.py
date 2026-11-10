@@ -85,7 +85,7 @@ st.markdown("""
 - 📝 **Registro sprechi**: inserisci nuove registrazioni e consulta lo storico
 - 🔮 **Previsione**: stima dello spreco con un modello di machine learning
 - 📄 **Report settimanale**: report scritto da un'AI con suggerimenti per ridurre lo spreco
-- ⚖️ **Info ed etica**: limiti, privacy e avvisi
+- ⚖️ **Etica e limiti**: informazioni di privacy e avvisi
 """)
 st.info("🤖 Le previsioni e i report sono generati da sistemi di intelligenza artificiale: "
         "sono un supporto alle decisioni e vanno sempre controllati da una persona.")
